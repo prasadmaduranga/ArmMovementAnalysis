@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1.1606863050/camera_utils.js" crossorigin="anonymouse"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.1.1606873488/drawing_utils.js" crossorigin="anonymouse"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1.1606863095/hands.js" crossorigin="anonymouse"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.123.0/build/three.min.js" crossorigin="anonymouse"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.123.0/examples/js/objects/Refractor.js" crossorigin="anonymouse"></script>
+
+    <link rel="stylesheet" href="stylesheets/css/hand_positioning.css">
+
+</head>
+<body>
+ <div class="container">
+  <video class="input_video"></video>
+  <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="message">
+      Loading
+    </div>
+  </div>
+  <a class="abs logo" href="http://www.mediapipe.dev" target="_blank">
+    <div style="display: flex;align-items: center;bottom: 0;right: 10px;">
+    </div>
+  </a>
+</div>
+    <script src="js/hand_tracker.js"></script>
+
+</body>
+</html>
