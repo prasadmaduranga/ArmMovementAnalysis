@@ -7,8 +7,8 @@ import pandas as pd
 import mediapipe as mp
 import numpy as np
 from pathlib import Path
+from src.features.Enumerators import HAND_ANGLES, HAND_DISTANCE_PAIRS, BODY_ANGLES, BODY_DISTANCE_PAIRS
 
-from Enumerators import HAND_ANGLES, HAND_DISTANCE_PAIRS, BODY_ANGLES, BODY_DISTANCE_PAIRS
 import src.util.base_util as base_util
 
 mp_drawing = mp.solutions.drawing_utils

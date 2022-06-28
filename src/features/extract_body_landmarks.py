@@ -45,7 +45,7 @@ def extract_hand_landmarks_from_images(args):
 
         image_keypoints = []
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        landmark_file = os.path.join(args.image_landmark_output_dir, 'image_landmarks_' + timestamp + '.csv')
+        landmark_file = os.path.join(args.image_landmark_output_dir, 'landmarks_' + timestamp + '.csv')
         img_index = 0
 
         for root, directories, filenames in os.walk(args.image_input_dir):
@@ -65,74 +65,22 @@ def extract_hand_landmarks_from_images(args):
                 frame_keypoints = []
                 image_id = base_util.get_file_name(image, False)
 
-                frame_keypoints.append(img_index)
+                frame_keypoints.append(image_id)
                 img = cv2.imread(os.path.join(root, image))
-                results_hand = hands.process(img)
-                results_pose = pose.process(img)
 
-                annotated_image = img.copy()
+                img.flags.writeable = False
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-                handedness = check_handedness(results_hand.multi_handedness)
+                frame_keypoints.extend(extract_frame_keypoints(cv2.flip(img,1)))
+                annotated_imag= annotate_frame_keypoints(img)
 
-                if (handedness is not None):
+                # Draw the pose annotation on the image.
+                annotated_imag.flags.writeable = True
+                annotated_imag = cv2.cvtColor(annotated_imag, cv2.COLOR_RGB2BGR)
 
-                    frame_keypoints.append("'" + handedness + "'")
-                    # hand
-                    # if the frame is single handed and it's the right hand, empty values will be added to
-                    # fill up left hand key points
-                    if  handedness == 'Right':
-                        for hand_landmark in Hand:
-                            frame_keypoints.append(None)
-
-                    # if both hands present, first it will give landmark of left hand, then right hand
-                    if results_hand.multi_hand_landmarks:
-                        for hand_landmarks in results_hand.multi_hand_landmarks:
-                            for data_point in hand_landmarks.landmark:
-                                frame_keypoints.append({'X': data_point.x,
-                                                        'Y': data_point.y,
-                                                        'Z': data_point.z,
-                                                        'Visibility': data_point.visibility, })
-
-                    # if the frame is single handed and it's the left hand, empty values will be added to
-                    # fill up right hand key points
-                    if handedness == 'Left':
-                        for hand_landmark in Hand:
-                            frame_keypoints.append(None)
-
-                    if results_hand.multi_hand_landmarks:
-                        for hand_landmarks in results_hand.multi_hand_landmarks:
-                            mp_drawing.draw_landmarks(
-                                annotated_image,
-                                hand_landmarks,
-                                mp_hands.HAND_CONNECTIONS,
-                                mp_drawing_styles.get_default_hand_landmarks_style(),
-                                mp_drawing_styles.get_default_hand_connections_style())
-
-                    # body
-                    mp_drawing.draw_landmarks(
-                        annotated_image,
-                        results_pose.pose_landmarks,
-                        mp_pose.POSE_CONNECTIONS,
-                        landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
-
-                    for body_landmark in Body:
-                        # Avoid adding invisible joints to the keypoint list
-                        if results_pose.pose_landmarks.landmark[body_landmark.value].visibility < 0.5:
-                            frame_keypoints.append(None)
-                            continue
-
-                        frame_keypoints.append({'X': results_pose.pose_landmarks.landmark[body_landmark.value].x,
-                                                'Y': results_pose.pose_landmarks.landmark[body_landmark.value].y,
-                                                'Z': results_pose.pose_landmarks.landmark[body_landmark.value].z,
-                                                'Visibility': results_pose.pose_landmarks.landmark[
-                                                    body_landmark.value].visibility, })
-
-
-
-                # cv2.imshow('MediaPipe Pose', cv2.flip(annotated_image, 1))
                 image_keypoints.append(frame_keypoints)
 
-                cv2.imwrite(args.annotated_image_output_dir + '/annotated_' + image_id + '.png', annotated_image)
+                cv2.imwrite(args.annotated_image_output_dir + '/annotated_' + image_id + '.png', annotated_imag)
 
                 img_index = img_index + 1
                 if cv2.waitKey(33) == ord('a'):
@@ -193,24 +141,20 @@ def extract_hand_landmarks_from_videos(args):
                     image.flags.writeable = False
                     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+                    # Extract frame keypoints
 
-                    frame_keypoints.extend(extract_frame_keypoints(image))
+                    frame_keypoints.extend(extract_frame_keypoints(cv2.flip(image,1)))
 
-
-                    # annotate_frame_keypoints (image)
-
-                    # results_hand = hands.process(image)
-                    # results_pose = pose.process(image)
+                    # Annotate frame with landmarks
+                    annotate_frame_keypoints (image)
 
                     # Draw the pose annotation on the image.
                     image.flags.writeable = True
                     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-
-
                     # Flip the image horizontally for a selfie-view display.
-                    if os.path.exists(args.annotated_video_output_dir):
-                        video_output.write(cv2.flip(annotate_frame_keypoints (image), 1))
+                    # if os.path.exists(args.annotated_video_output_dir):
+                    #     video_output.write(annotate_frame_keypoints (image))
 
                     video_keypoints.append(frame_keypoints)
 
@@ -232,7 +176,7 @@ def check_handedness(multi_handedness):
     else:
         return None
 
-
+# Extract body and hand landmarks
 def extract_frame_keypoints(image):
     image_keypoints = []
 
@@ -357,3 +301,5 @@ if __name__ == "__main__":
 #
 # python src/features/extract_3D_skeleton_data.py --base_dir=../../data --video_input_dir=/raw/strokeVideo --landmark_output_dir=/processed/landmarks \
 # --video_output_dir=/processed/annotatedVideo
+
+# --image_input_dir=../../data/raw/images --image_landmark_output_dir=../../data/processed/landmarks/imageLandmarks
