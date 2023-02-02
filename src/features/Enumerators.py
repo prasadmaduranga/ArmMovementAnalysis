@@ -36,6 +36,14 @@ class Body(Enum):
     LEFT_FOOT_INDEX = 31
     RIGHT_FOOT_INDEX = 32
 
+class Upper_Body(Enum):
+    LEFT_SHOULDER = 11
+    RIGHT_SHOULDER = 12
+    LEFT_ELBOW = 13
+    RIGHT_ELBOW = 14
+    LEFT_WRIST = 15
+    RIGHT_WRIST = 16
+
 
 class Hand(Enum):
     WRIST = 0
@@ -60,6 +68,7 @@ class Hand(Enum):
     PINKY_DIP = 19
     PINKY_TIP = 20
 
+# 15 angles for each hand
 class HAND_ANGLES(Enum):
     WRIST_THUMB_CMC_MCP = (Hand.WRIST, Hand.THUMB_CMC, Hand.THUMB_MCP)
     THUMB_CMC_MCP_IP = (Hand.THUMB_CMC, Hand.THUMB_MCP, Hand.THUMB_IP)
@@ -77,6 +86,7 @@ class HAND_ANGLES(Enum):
     PINKY_MCP_PIP_DIP = (Hand.PINKY_MCP, Hand.PINKY_PIP, Hand.PINKY_DIP)
     PINKY_PIP_DIP_TIP = (Hand.PINKY_PIP, Hand.PINKY_DIP, Hand.PINKY_TIP)
 
+# 9 distance measures for each hand
 class HAND_DISTANCE_PAIRS(Enum):
     THUMB_CMC_TIP = (Hand.THUMB_CMC, Hand.THUMB_TIP)
     INDEX_MCP_TIP = (Hand.INDEX_FINGER_MCP, Hand.INDEX_FINGER_TIP)
@@ -88,6 +98,7 @@ class HAND_DISTANCE_PAIRS(Enum):
     MIDDLE_TIP_RING_TIP = (Hand.MIDDLE_FINGER_TIP,Hand.RING_FINGER_TIP)
     RING_TIP_PINKY_TIP = (Hand.RING_FINGER_TIP,Hand.PINKY_TIP)
 
+# 6 body measures
 class BODY_ANGLES(Enum):
     R_SHOULDER_L_SHOULDER_L_ELBOW = (Body.RIGHT_SHOULDER, Body.LEFT_SHOULDER,Body.LEFT_ELBOW)
     L_SHOULDER_L_ELBOW_L_WRIST = (Body.LEFT_SHOULDER,Body.LEFT_ELBOW,Body.LEFT_WRIST)
@@ -96,7 +107,10 @@ class BODY_ANGLES(Enum):
     R_SHOULDER_R_ELBOW_R_WRIST = (Body.RIGHT_SHOULDER, Body.RIGHT_ELBOW, Body.RIGHT_WRIST)
     R_ELBOW_R_WRIST_R_PINKY = (Body.RIGHT_ELBOW, Body.RIGHT_WRIST, Body.RIGHT_PINKY)
 
-
+# 2 body distance measures
 class BODY_DISTANCE_PAIRS(Enum):
     L_SHOULDER_L_WRIST = (Body.LEFT_SHOULDER,Body.LEFT_WRIST)
     R_SHOULDER_R_WRIST = (Body.RIGHT_SHOULDER,Body.RIGHT_WRIST)
+
+
+# 56 feature vector for each frame

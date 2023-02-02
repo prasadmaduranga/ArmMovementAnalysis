@@ -16,6 +16,8 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 NUM_HAND_FEATURES = 21
 
+word_index_class_mapping = {"001":"Opaque","002":"Red","003":"Green","004":"Yellow","005":"Bright","006":"Light-blue","007":"Colors","008":"Red","009":"Women","010":"Enemy"}
+
 
 def extract_hand_features(args):
     '''
@@ -37,6 +39,9 @@ def extract_hand_features(args):
             left_hand_distance_headings = ['LEFT_' + e.name for e in HAND_DISTANCE_PAIRS]
             right_hand_distance_headings = ['RIGHT_' + e.name for e in HAND_DISTANCE_PAIRS]
             body_distance_headings = [e.name for e in BODY_DISTANCE_PAIRS]
+            video_metadata = ['WORD_CLASS']
+
+
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             file_name = base_util.get_file_name()
@@ -48,13 +53,16 @@ def extract_hand_features(args):
                           'w') as outputfile:
                     frames = inputfile.readlines()
                     feature_list = [
-                                       'ID'] + left_hand_angle_headings + right_hand_angle_headings + body_angle_headings + left_hand_distance_headings + right_hand_distance_headings + body_distance_headings
+                                       'ID'] + left_hand_angle_headings + right_hand_angle_headings + body_angle_headings + left_hand_distance_headings + right_hand_distance_headings + body_distance_headings + video_metadata
+
 
                     for frame in frames:
                         frame_features = []
 
                         # Extract frame id
                         frame_id = ast.literal_eval(frame)[0]
+
+                        image_category = extract_word_class(frame_id)
 
                         # if no hands detected, frame will not be processed
                         if frame.find(',') < 0 or not (
@@ -79,6 +87,7 @@ def extract_hand_features(args):
                         frame_features.extend([frame_id])
                         frame_features.extend(frame_angles)
                         frame_features.extend(frame_distances)
+                        frame_features.append(image_category)
 
                         image_features.append(frame_features)
 
@@ -87,6 +96,10 @@ def extract_hand_features(args):
                     df = pd.DataFrame(image_features, columns=feature_list)
                     df.to_csv(outputfile, encoding='utf-8', index=False)
 
+def filter_data():
+    df = pd.read_csv('../../data/processed/features/video/Sign_Language_Data/set1/features_video_test.csv')
+    print(df)
+    df.head(10)
 
 def read_hand_landmark_coordinates(frame_keypoints_record):
     frame_keypoints_record = ast.literal_eval(frame_keypoints_record)
@@ -106,7 +119,6 @@ def read_hand_landmark_coordinates(frame_keypoints_record):
 
     return keypoint_coordinates
 
-
 def get_handedness(frame_keypoints_record):
     frame_keypoints = ast.literal_eval(frame_keypoints_record)
 
@@ -117,7 +129,6 @@ def get_handedness(frame_keypoints_record):
     elif frame_keypoints[1].find('Both') > 0:
         return ['Left', 'Right']
     return
-
 
 def compute_angles(keypoint_coordinates, rad=False):
     hand_landmark_coords = keypoint_coordinates[:42]
@@ -183,10 +194,8 @@ def compute_angles(keypoint_coordinates, rad=False):
 
     return angles
 
-
 def dotproduct(v1, v2):
     return sum((a * b) for a, b in zip(v1, v2))
-
 
 # return cross product magnitude
 def crossproduct(v1, v2):
@@ -196,10 +205,8 @@ def crossproduct(v1, v2):
 
     return math.sqrt(sum((v1[0] ** 2, v1[1] ** 2, v1[2] ** 2)))
 
-
 def length(v):
     return math.sqrt(dotproduct(v, v))
-
 
 def calculate_angle(v1, v2, rad=True):
     cosval = math.acos(np.round(dotproduct(v1, v2) / (length(v1) * length(v2)), decimals=7))
@@ -222,12 +229,10 @@ def calculate_angle(v1, v2, rad=True):
     # else:
     #     return cosval
 
-
 def calculate_distance(v1, v2):
     d = math.sqrt(sum(((v1[0] - v2[0]) ** 2, (v1[1] - v2[1]) ** 2, (v1[2] - v2[2]) ** 2)))
 
     return d
-
 
 def compute_distances(keypoint_coordinates):
     hand_landmark_coords = keypoint_coordinates[:42]
@@ -294,6 +299,9 @@ def compute_distances(keypoint_coordinates):
 
     return distance
 
+def extract_word_class(file_name):
+    frame_features = file_name.split('_')
+    return word_index_class_mapping[frame_features[0]]
 
 def main():
     parser = argparse.ArgumentParser(
@@ -305,11 +313,11 @@ def main():
     #                     help="Name of directory to where input hand landmark points located")
 
     parser.add_argument("--input_dir", type=str,
-                        default='../../data/processed/landmarks/videoLandmarks',
+                        default='../../data/processed/landmarks/videoLandmarks/Sign_Language_Data/set1/',
                         help="Name of directory to where input hand landmark points located")
 
     parser.add_argument("--output_dir", type=str,
-                        default='/data/processed/features/video',
+                        default='/data/processed/features/video/Sign_Language_Data/set1',
                         help="Name of directory to output hand feature output file")
 
     args = parser.parse_args()
@@ -317,6 +325,7 @@ def main():
     print(args)
 
     extract_hand_features(args)
+    # filter_data()
 
 
 if __name__ == "__main__":

@@ -21,6 +21,8 @@ mp_hands = mp.solutions.hands
 video_landmarks = False
 image_landmarks = True
 
+annotate_video = False
+
 video_pose_key_extractor = mp_pose.Pose(
             model_complexity=2,
             min_detection_confidence=0.5,
@@ -109,6 +111,7 @@ def extract_hand_landmarks_from_videos(args):
 
             for video_file in filenames:
 
+                print(video_file)
                 # skip hidden files
                 if video_file[0] == '.':
                     continue
@@ -116,7 +119,7 @@ def extract_hand_landmarks_from_videos(args):
                 video_id = base_util.get_file_name(video_file, False)
                 video_input_stream = cv2.VideoCapture(os.path.join(args.video_input_dir, video_file))
 
-                if os.path.exists(args.annotated_video_output_dir):
+                if  annotate_video and os.path.exists(args.annotated_video_output_dir):
                     video_output = cv2.VideoWriter(
                         os.path.join( args.annotated_video_output_dir, video_file),
                         cv2.VideoWriter_fourcc(*'MP4V'),
@@ -146,19 +149,22 @@ def extract_hand_landmarks_from_videos(args):
                     frame_keypoints.extend(extract_frame_keypoints(cv2.flip(image,1)))
 
                     # Annotate frame with landmarks
-                    annotate_frame_keypoints (image)
+                    if annotate_video:
+                        annotate_frame_keypoints (image)
 
                     # Draw the pose annotation on the image.
                     image.flags.writeable = True
                     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
                     # Flip the image horizontally for a selfie-view display.
-                    # if os.path.exists(args.annotated_video_output_dir):
-                    #     video_output.write(annotate_frame_keypoints (image))
+                    # uncomment for annotating video file
+                    if annotate_video and os.path.exists(args.annotated_video_output_dir):
+                        video_output.write(annotate_frame_keypoints (image))
 
                     video_keypoints.append(frame_keypoints)
 
-                video_output.release()
+                if annotate_video:
+                    video_output.release()
                 video_input_stream.release()
 
             np.savetxt(landmark_file, np.asarray(video_keypoints), delimiter=' ,', fmt='%s')
