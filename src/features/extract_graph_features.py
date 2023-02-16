@@ -306,11 +306,11 @@ def main():
     )
 
     parser.add_argument("--video_input_dir", type=str,
-                        default='../../data/raw/Sign_Language_Data/set00',
+                        default='../../data/raw/Sign_Language_Data/All',
                         help="Name of directory to read video data from")
 
     parser.add_argument("--output_file", type=str,
-                        default='../../data/processed/video_graph_features_0.csv',
+                        default='../../data/processed/video_graph_features_all_right_hand_signs.csv',
                         help="Name of directory to output extracted feature vector")
 
     args = parser.parse_args()

@@ -13,17 +13,21 @@ import pandas as pd
 import math
 import time
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, accuracy_score
+import src.util.plot_util as plot_util
 
-OUTPUT_CLASSES = 8
+
+OUTPUT_CLASSES = ['opaque', 'red', 'green', 'yellow', 'bright', 'light_blue', 'colors','pink']
+data_file = '../../data/processed/video_graph_features_0.csv'
+meta_data_file = '../data/sign_language_dataset/sign_lang_meta_data.csv'
+model_archive_file = './savedModelParams/LSTM_400sample_2023_02_02_V1.pt'
+
 df = pandas.DataFrame()
 
 if __name__ == "__main__":
     # data set loading
-    data_path = '../../data/processed/video_graph_features_0.csv'
-    meta_data_path = '../data/sign_language_dataset/sign_lang_meta_data.csv'
-
-    df = pd.read_csv(data_path)
-    meta_data = pd.read_csv(meta_data_path)
+    df = pd.read_csv(data_file)
+    meta_data = pd.read_csv(meta_data_file)
 
     # Select only right handed videos
     right_handed_sign_list = meta_data.query("hand == 'r'")['id']
@@ -33,21 +37,20 @@ if __name__ == "__main__":
     df = df.iloc[:, np.r_[0, 91:175, 199]].dropna()
 
 
-def PrepareDataset(df, BATCH_SIZE=2, seq_len=84, pred_len=1, train_propotion=0.7, valid_propotion=0.2):
-    # ['VIDEO_ID', 'USER_ID', 'ITERATION', 'FRAME_SQ_NUMBER', 'TIMESTAMP', 'CURRENT_POS_AVI_RATIO', 'HANDEDNESS','DATA','SIGN']
+def PrepareDataset(df, BATCH_SIZE=2, seq_len=84, train_propotion=0.7, valid_propotion=0.2):
+    # ['VIDEO_ID', 'USER_ID', 'ITERATION', 'FRAME_SQ_NUMBER', 'TIMESTAMP', 'CURRENT_POS_AVI_RATIO', 'HANDEDNESS','-- FEATURE DATA -- ','SIGN']
     """ Prepare training and testing datasets and dataloaders.
 
-    Convert speed/volume/occupancy matrix to training and testing dataset.
-    The vertical axis of speed_matrix is the time axis and the horizontal axis
-    is the spatial axis.
-
+    Convert video frame hand corrdinates to training and testing dataset.
+    The vertical axis of matrix is the time axis and the horizontal axis
+    is the spatial axis. (feature vector)
 
     Args:
-        df: a Matrix containing spatial-temporal speed data for a network
-        seq_len: length of input sequence
-        pred_len: length of predicted sequence
+        df: a Matrix containing spatial-temporal coordinate data for a network
+        seq_len: length of feature vector
     Returns:
         Training dataloader
+        Validation dataloader
         Testing dataloader
     """
 
@@ -110,22 +113,15 @@ def TrainModel(model, train_dataloader, valid_dataloader, learning_rate=1e-5, nu
                min_delta=0.00001):
     inputs, labels = next(iter(train_dataloader))
     [batch_size, step_size, fea_size] = inputs.size()
-    input_dim = fea_size
-    hidden_dim = fea_size
-    output_dim = fea_size
 
     model.cpu()
 
-    loss_MSE = torch.nn.MSELoss()
-    loss_L1 = torch.nn.L1Loss()
     loss_crossEntropy = torch.nn.CrossEntropyLoss()
 
     learning_rate = 1e-5
     optimizer = torch.optim.RMSprop(model.parameters(), lr=learning_rate)
-
     use_gpu = torch.cuda.is_available()
 
-    interval = 100
     losses_train = []
     losses_valid = []
     losses_epochs_train = []
@@ -139,11 +135,7 @@ def TrainModel(model, train_dataloader, valid_dataloader, learning_rate=1e-5, nu
     patient_epoch = 0
 
     for epoch in range(num_epochs):
-        #         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-        #         print('-' * 10)
-
         trained_number = 0
-
         valid_dataloader_iter = iter(valid_dataloader)
 
         losses_epoch_train = []
@@ -164,7 +156,6 @@ def TrainModel(model, train_dataloader, valid_dataloader, learning_rate=1e-5, nu
 
             outputs = model(inputs)
 
-            # loss_train = loss_MSE(outputs, torch.squeeze(labels))
             loss_train = loss_crossEntropy(outputs, labels.long())
             losses_train.append(loss_train.data)
             losses_epoch_train.append(loss_train.data)
@@ -189,7 +180,6 @@ def TrainModel(model, train_dataloader, valid_dataloader, learning_rate=1e-5, nu
 
             outputs_val = model(inputs_val)
 
-            # loss_valid = loss_MSE(outputs_val, torch.squeeze(labels_val))
             loss_valid = loss_crossEntropy(outputs_val, torch.squeeze(labels_val.long()))
             losses_valid.append(loss_valid.data)
             losses_epoch_valid.append(loss_valid.data)
@@ -243,16 +233,11 @@ def TestModel(model, test_dataloader):
 
     use_gpu = torch.cuda.is_available()
 
-    loss_MSE = torch.nn.MSELoss()
-    loss_L1 = torch.nn.MSELoss()
-    loss_crossEntropy = torch.nn.CrossEntropyLoss()
-
     tested_batch = 0
 
-    losses_mse = []
-    losses_l1 = []
     losses_CE = []
-
+    y_true = []
+    y_pred = []
 
     for data in test_dataloader:
         inputs, labels = data
@@ -278,8 +263,11 @@ def TestModel(model, test_dataloader):
         _, preds = torch.max(outputs, dim=1)
         acc = torch.sum(preds == labels).float() / labels.size(0)
 
-        print('btach accuracy {} , batch id {}'.format(acc,(tested_batch-1)))
-        if tested_batch % 1 == 0:
+        y_true.extend(labels.tolist())
+        y_pred.extend(preds.tolist())
+
+        print('btach accuracy {} , batch id {}'.format(acc, (tested_batch - 1)))
+        if tested_batch % 10 == 0:
             cur_time = time.time()
             print('Tested #: {}, loss_l1: {} ,  time: {}'.format( \
                 tested_batch * batch_size, \
@@ -288,8 +276,16 @@ def TestModel(model, test_dataloader):
             pre_time = cur_time
 
     losses_CE = np.array(losses_CE)
+    acc = accuracy_score(y_true, y_pred)
+    cm = confusion_matrix(y_true, y_pred)
     print('Tested: Cross Entropy losses: {} '.format(losses_CE))
-    return [losses_l1, losses_mse, losses_CE]
+    print('accuracy_score {}'.format(acc))
+    print('confusion_matrix {}'.format(cm))
+
+    plot_util.plot_confusion_matrix(cm, classes=[], title='Confusion matrix')
+    plt.show()
+
+    return [losses_CE]
 
 
 class LSTM(nn.Module):
@@ -331,7 +327,7 @@ class LSTM(nn.Module):
         if self.output_last:
             for i in range(time_step):
                 step_tensor = torch.squeeze(inputs[:, i:i + 1, :])
-                if((step_tensor==0).all()):
+                if ((step_tensor == 0).all()):
                     continue
                 Hidden_State, Cell_State = self.step(step_tensor, Hidden_State, Cell_State)
 
@@ -359,8 +355,9 @@ class LSTM(nn.Module):
             Cell_State = Variable(torch.zeros(batch_size, self.hidden_size))
             return Hidden_State, Cell_State
 
+
 # to load from a saved params, set train_model to False
-train_model = False
+train_model = True
 
 train_dataloader, valid_dataloader, test_dataloader = PrepareDataset(df)
 inputs, labels = next(iter(train_dataloader))
@@ -370,12 +367,12 @@ hidden_dim = fea_size
 output_dim = fea_size
 
 # LSTM model with angle and distance measures
-lstm = LSTM(input_dim, hidden_dim, output_dim, output_last=True, output_classes=OUTPUT_CLASSES)
+lstm = LSTM(input_dim, hidden_dim, output_dim, output_last=True, output_classes=len(OUTPUT_CLASSES))
 
 if train_model:
-    lstm, lstm_loss = TrainModel(lstm, train_dataloader, valid_dataloader, num_epochs=1)
-    torch.save(lstm.state_dict(), './savedModelParams/LSTM_model_V1.pt')
+    lstm, lstm_loss = TrainModel(lstm, train_dataloader, valid_dataloader, num_epochs=200)
+    torch.save(lstm.state_dict(), model_archive_file)
 else:
-    lstm.load_state_dict(torch.load('./savedModelParams/LSTM_model_V1.pt'))
+    lstm.load_state_dict(torch.load(model_archive_file))
 
 lstm_test = TestModel(lstm, test_dataloader)

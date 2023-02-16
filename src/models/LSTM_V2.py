@@ -13,6 +13,8 @@ import pandas as pd
 import math
 import time
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix,accuracy_score
+import src.util.plot_util as plot_util
 
 OUTPUT_CLASSES = 8
 df = pandas.DataFrame()
@@ -229,6 +231,49 @@ def TrainModel(model, train_dataloader, valid_dataloader, learning_rate=1e-5, nu
     return best_model, [losses_train, losses_valid, losses_epochs_train, losses_epochs_valid]
 
 
+def train(model, train_loader, validation_loader, optimizer, criterion, num_epochs=200):
+    train_losses = []
+    validation_losses = []
+
+
+    for epoch in range(num_epochs):
+        # Training phase
+        model.train()
+        train_loss = 0.0
+        for inputs, labels in train_loader:
+            optimizer.zero_grad()
+
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            train_loss += loss.item()
+
+        train_loss /= len(train_loader)
+        train_losses.append(train_loss)
+
+        # Validation phase
+        model.eval()
+        validation_loss = 0.0
+        with torch.no_grad():
+            for inputs, labels in validation_loader:
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+
+                validation_loss += loss.item()
+
+        validation_loss /= len(validation_loader)
+        validation_losses.append(validation_loss)
+
+        print(
+            f"Epoch: {epoch + 1}/{num_epochs}, Training Loss: {train_loss:.4f}, Validation Loss: {validation_loss:.4f}")
+
+    # Plot the training and validation losses
+    plt.plot(train_losses, label='Training Loss')
+    plt.plot
+
+
 def TestModel(model, test_dataloader, max_speed):
     inputs, labels = next(iter(test_dataloader))
     [batch_size, step_size, fea_size] = inputs.size()
@@ -339,7 +384,7 @@ output_dim = fea_size
 
 # LSTM model with angle and distance measures
 lstm = LSTMClassifier(input_dim, hidden_dim, output_dim, output_last=True, output_classes=OUTPUT_CLASSES)
-lstm, lstm_loss = TrainModel(lstm, train_dataloader, valid_dataloader, num_epochs=200)
+lstm, lstm_loss = TrainModel(lstm, train_dataloader, valid_dataloader, num_epochs=1)
 
 max_speed = 10
 lstm_test = TestModel(lstm, test_dataloader, max_speed)
