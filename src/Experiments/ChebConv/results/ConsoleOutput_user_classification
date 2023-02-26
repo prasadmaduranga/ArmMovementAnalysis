@@ -1,0 +1,155 @@
+/usr/local/bin/python3.9 "/Users/prasadmaduranga/higher studies/research/Stroke research/Projects/Staying connected Project/My Projects/ArmMovementAnalysis/src/Experiments/ChebConv/code/ChebConv_classifyUsers.py"
+Epoch: 0, train_loss: 2.3025152683258057, valid_loss: 2.3034873008728027, time: [28.27], best model: 1
+Epoch: 1, train_loss: 2.3016417026519775, valid_loss: 2.3034286499023438, time: [29.6], best model: 1
+Epoch: 2, train_loss: 2.3010849952697754, valid_loss: 2.303502321243286, time: [29.2], best model: 0
+Epoch: 3, train_loss: 2.3005592823028564, valid_loss: 2.303375244140625, time: [30.88], best model: 1
+Epoch: 4, train_loss: 2.300010919570923, valid_loss: 2.3031880855560303, time: [34.09], best model: 1
+Epoch: 5, train_loss: 2.299461603164673, valid_loss: 2.3031468391418457, time: [31.18], best model: 1
+Epoch: 6, train_loss: 2.298931121826172, valid_loss: 2.302729606628418, time: [32.41], best model: 1
+Epoch: 7, train_loss: 2.298391103744507, valid_loss: 2.302882671356201, time: [32.26], best model: 0
+Epoch: 8, train_loss: 2.2978289127349854, valid_loss: 2.303574323654175, time: [31.93], best model: 0
+Epoch: 9, train_loss: 2.2973034381866455, valid_loss: 2.3028883934020996, time: [32.53], best model: 0
+Epoch: 10, train_loss: 2.2967417240142822, valid_loss: 2.3026514053344727, time: [32.2], best model: 1
+Epoch: 11, train_loss: 2.2965149879455566, valid_loss: 2.302361011505127, time: [32.37], best model: 1
+Epoch: 12, train_loss: 2.295673370361328, valid_loss: 2.3022031784057617, time: [32.51], best model: 1
+Epoch: 13, train_loss: 2.2950704097747803, valid_loss: 2.3024003505706787, time: [32.9], best model: 0
+Epoch: 14, train_loss: 2.2943992614746094, valid_loss: 2.3021812438964844, time: [32.08], best model: 1
+Epoch: 15, train_loss: 2.29374098777771, valid_loss: 2.302248001098633, time: [33.21], best model: 0
+Epoch: 16, train_loss: 2.2931394577026367, valid_loss: 2.301828384399414, time: [32.43], best model: 1
+Epoch: 17, train_loss: 2.2924771308898926, valid_loss: 2.3022613525390625, time: [33.07], best model: 0
+Epoch: 18, train_loss: 2.291816234588623, valid_loss: 2.301455497741699, time: [33.25], best model: 1
+Epoch: 19, train_loss: 2.2915430068969727, valid_loss: 2.3012144565582275, time: [32.16], best model: 1
+Epoch: 20, train_loss: 2.290355682373047, valid_loss: 2.302288055419922, time: [32.57], best model: 0
+Epoch: 21, train_loss: 2.289539337158203, valid_loss: 2.3018791675567627, time: [32.91], best model: 0
+Epoch: 22, train_loss: 2.2888612747192383, valid_loss: 2.3009135723114014, time: [32.92], best model: 1
+Epoch: 23, train_loss: 2.2880189418792725, valid_loss: 2.3012847900390625, time: [33.22], best model: 0
+Epoch: 24, train_loss: 2.2872161865234375, valid_loss: 2.301424026489258, time: [33.56], best model: 0
+Epoch: 25, train_loss: 2.286393642425537, valid_loss: 2.3002724647521973, time: [32.84], best model: 1
+Epoch: 26, train_loss: 2.2854490280151367, valid_loss: 2.300116777420044, time: [33.83], best model: 1
+Epoch: 27, train_loss: 2.2845137119293213, valid_loss: 2.301281452178955, time: [33.07], best model: 0
+Epoch: 28, train_loss: 2.283548355102539, valid_loss: 2.2997894287109375, time: [32.62], best model: 1
+Epoch: 29, train_loss: 2.282602548599243, valid_loss: 2.300598382949829, time: [33.51], best model: 0
+Epoch: 30, train_loss: 2.281524181365967, valid_loss: 2.299276113510132, time: [33.54], best model: 1
+Epoch: 31, train_loss: 2.280249834060669, valid_loss: 2.2990283966064453, time: [32.11], best model: 1
+Epoch: 32, train_loss: 2.279256582260132, valid_loss: 2.3009884357452393, time: [33.98], best model: 0
+Epoch: 33, train_loss: 2.278085470199585, valid_loss: 2.2988386154174805, time: [33.92], best model: 1
+Epoch: 34, train_loss: 2.2769596576690674, valid_loss: 2.299420118331909, time: [33.58], best model: 0
+Epoch: 35, train_loss: 2.275761127471924, valid_loss: 2.298247814178467, time: [33.4], best model: 1
+Epoch: 36, train_loss: 2.274407148361206, valid_loss: 2.299429178237915, time: [32.65], best model: 0
+Epoch: 37, train_loss: 2.2733075618743896, valid_loss: 2.2995035648345947, time: [33.36], best model: 0
+Epoch: 38, train_loss: 2.272085666656494, valid_loss: 2.299621820449829, time: [33.09], best model: 0
+Epoch: 39, train_loss: 2.270698070526123, valid_loss: 2.299137830734253, time: [33.4], best model: 0
+Epoch: 40, train_loss: 2.26961612701416, valid_loss: 2.296015739440918, time: [32.79], best model: 1
+Epoch: 41, train_loss: 2.268261671066284, valid_loss: 2.2956907749176025, time: [34.21], best model: 1
+Epoch: 42, train_loss: 2.2668213844299316, valid_loss: 2.296470880508423, time: [32.9], best model: 0
+Epoch: 43, train_loss: 2.2654855251312256, valid_loss: 2.2979564666748047, time: [33.7], best model: 0
+Epoch: 44, train_loss: 2.264136552810669, valid_loss: 2.295034170150757, time: [33.55], best model: 1
+Epoch: 45, train_loss: 2.2627298831939697, valid_loss: 2.294872760772705, time: [33.51], best model: 1
+Epoch: 46, train_loss: 2.2615857124328613, valid_loss: 2.2965149879455566, time: [33.23], best model: 0
+Epoch: 47, train_loss: 2.260075092315674, valid_loss: 2.2952189445495605, time: [33.55], best model: 0
+Epoch: 48, train_loss: 2.258761167526245, valid_loss: 2.295954704284668, time: [34.], best model: 0
+Epoch: 49, train_loss: 2.2575254440307617, valid_loss: 2.2949326038360596, time: [33.93], best model: 0
+Epoch: 50, train_loss: 2.2561206817626953, valid_loss: 2.293850898742676, time: [32.58], best model: 1
+Epoch: 51, train_loss: 2.254843235015869, valid_loss: 2.294576644897461, time: [33.42], best model: 0
+Epoch: 52, train_loss: 2.2535600662231445, valid_loss: 2.291517496109009, time: [34.06], best model: 1
+Epoch: 53, train_loss: 2.2520053386688232, valid_loss: 2.293964147567749, time: [32.82], best model: 0
+Epoch: 54, train_loss: 2.2508115768432617, valid_loss: 2.293656826019287, time: [32.68], best model: 0
+Epoch: 55, train_loss: 2.2494304180145264, valid_loss: 2.2938170433044434, time: [33.31], best model: 0
+Epoch: 56, train_loss: 2.2483835220336914, valid_loss: 2.2926039695739746, time: [33.56], best model: 0
+Epoch: 57, train_loss: 2.2468340396881104, valid_loss: 2.2893989086151123, time: [33.21], best model: 1
+Epoch: 58, train_loss: 2.2455074787139893, valid_loss: 2.2919631004333496, time: [32.4], best model: 0
+Epoch: 59, train_loss: 2.2440171241760254, valid_loss: 2.290919780731201, time: [33.93], best model: 0
+Epoch: 60, train_loss: 2.2431557178497314, valid_loss: 2.2902204990386963, time: [34.06], best model: 0
+Epoch: 61, train_loss: 2.241236925125122, valid_loss: 2.2869720458984375, time: [32.98], best model: 1
+Epoch: 62, train_loss: 2.2401719093322754, valid_loss: 2.2899765968322754, time: [33.78], best model: 0
+Epoch: 63, train_loss: 2.238668441772461, valid_loss: 2.2854409217834473, time: [34.51], best model: 1
+Epoch: 64, train_loss: 2.2378900051116943, valid_loss: 2.2874977588653564, time: [32.97], best model: 0
+Epoch: 65, train_loss: 2.2361297607421875, valid_loss: 2.287576675415039, time: [33.61], best model: 0
+Epoch: 66, train_loss: 2.2348568439483643, valid_loss: 2.2895567417144775, time: [32.97], best model: 0
+Epoch: 67, train_loss: 2.2343461513519287, valid_loss: 2.2884151935577393, time: [33.34], best model: 0
+Epoch: 68, train_loss: 2.2328405380249023, valid_loss: 2.2849841117858887, time: [33.22], best model: 1
+Epoch: 69, train_loss: 2.2309634685516357, valid_loss: 2.288865327835083, time: [33.37], best model: 0
+Epoch: 70, train_loss: 2.22934627532959, valid_loss: 2.2839388847351074, time: [33.61], best model: 1
+Epoch: 71, train_loss: 2.22816801071167, valid_loss: 2.2861180305480957, time: [34.37], best model: 0
+Epoch: 72, train_loss: 2.2267181873321533, valid_loss: 2.2874045372009277, time: [33.54], best model: 0
+Epoch: 73, train_loss: 2.2253031730651855, valid_loss: 2.2830095291137695, time: [32.77], best model: 1
+Epoch: 74, train_loss: 2.223594903945923, valid_loss: 2.280367851257324, time: [33.78], best model: 1
+Epoch: 75, train_loss: 2.222360849380493, valid_loss: 2.280712604522705, time: [32.81], best model: 0
+Epoch: 76, train_loss: 2.220705509185791, valid_loss: 2.2813076972961426, time: [33.76], best model: 0
+Epoch: 77, train_loss: 2.219553232192993, valid_loss: 2.2824859619140625, time: [33.87], best model: 0
+Epoch: 78, train_loss: 2.217712640762329, valid_loss: 2.281743049621582, time: [33.22], best model: 0
+Epoch: 79, train_loss: 2.216160535812378, valid_loss: 2.2809906005859375, time: [34.15], best model: 0
+Epoch: 80, train_loss: 2.2152514457702637, valid_loss: 2.281355619430542, time: [33.58], best model: 0
+Epoch: 81, train_loss: 2.2135062217712402, valid_loss: 2.278625011444092, time: [34.3], best model: 1
+Epoch: 82, train_loss: 2.211327314376831, valid_loss: 2.2802958488464355, time: [32.93], best model: 0
+Epoch: 83, train_loss: 2.2094452381134033, valid_loss: 2.2764689922332764, time: [33.81], best model: 1
+Epoch: 84, train_loss: 2.207872152328491, valid_loss: 2.281505584716797, time: [33.27], best model: 0
+Epoch: 85, train_loss: 2.206357002258301, valid_loss: 2.2809784412384033, time: [32.81], best model: 0
+Epoch: 86, train_loss: 2.2052032947540283, valid_loss: 2.279639482498169, time: [33.33], best model: 0
+Epoch: 87, train_loss: 2.2043066024780273, valid_loss: 2.2748606204986572, time: [34.49], best model: 1
+Epoch: 88, train_loss: 2.2012641429901123, valid_loss: 2.2771286964416504, time: [33.35], best model: 0
+Epoch: 89, train_loss: 2.200481414794922, valid_loss: 2.2758500576019287, time: [33.29], best model: 0
+Epoch: 90, train_loss: 2.1987102031707764, valid_loss: 2.278963565826416, time: [33.35], best model: 0
+Epoch: 91, train_loss: 2.1985907554626465, valid_loss: 2.274160623550415, time: [33.47], best model: 1
+Epoch: 92, train_loss: 2.1975789070129395, valid_loss: 2.278688430786133, time: [34.78], best model: 0
+Epoch: 93, train_loss: 2.1933631896972656, valid_loss: 2.2801270484924316, time: [33.05], best model: 0
+Epoch: 94, train_loss: 2.1927645206451416, valid_loss: 2.2722082138061523, time: [32.98], best model: 1
+Epoch: 95, train_loss: 2.189750909805298, valid_loss: 2.278564691543579, time: [33.72], best model: 0
+Epoch: 96, train_loss: 2.1885993480682373, valid_loss: 2.2779242992401123, time: [34.46], best model: 0
+Epoch: 97, train_loss: 2.1869964599609375, valid_loss: 2.2797882556915283, time: [33.], best model: 0
+Epoch: 98, train_loss: 2.186497449874878, valid_loss: 2.278486490249634, time: [34.22], best model: 0
+Epoch: 99, train_loss: 2.183476448059082, valid_loss: 2.27361798286438, time: [33.6], best model: 0
+Epoch: 100, train_loss: 2.182041883468628, valid_loss: 2.2795560359954834, time: [33.59], best model: 0
+Epoch: 101, train_loss: 2.181065320968628, valid_loss: 2.2762057781219482, time: [33.61], best model: 0
+Epoch: 102, train_loss: 2.1786108016967773, valid_loss: 2.277069568634033, time: [33.39], best model: 0
+Epoch: 103, train_loss: 2.1792116165161133, valid_loss: 2.2813384532928467, time: [34.76], best model: 0
+Early Stopped at Epoch: 104
+btach accuracy 0.5 , batch id 0
+btach accuracy 1.0 , batch id 1
+btach accuracy 1.0 , batch id 2
+btach accuracy 0.5 , batch id 3
+btach accuracy 0.0 , batch id 4
+btach accuracy 0.5 , batch id 5
+btach accuracy 0.0 , batch id 6
+btach accuracy 0.5 , batch id 7
+btach accuracy 0.0 , batch id 8
+btach accuracy 0.5 , batch id 9
+Tested #: 20, loss_l1: [2.1902719] ,  time: [1.06367517]
+btach accuracy 0.0 , batch id 10
+btach accuracy 0.0 , batch id 11
+btach accuracy 0.0 , batch id 12
+btach accuracy 0.0 , batch id 13
+btach accuracy 0.0 , batch id 14
+btach accuracy 0.5 , batch id 15
+btach accuracy 0.5 , batch id 16
+btach accuracy 0.0 , batch id 17
+btach accuracy 0.5 , batch id 18
+btach accuracy 0.5 , batch id 19
+Tested #: 40, loss_l1: [2.1555314] ,  time: [0.90506911]
+Tested: Cross Entropy losses: [2.1847036 1.9027312 1.8994017 2.0906334 2.315656  2.0457861 2.2617466
+ 2.1065886 2.2730174 2.1902719 2.2022953 2.301138  2.3072186 2.327516
+ 2.3113213 2.0621274 2.2389429 2.326652  2.046483  2.1555314]
+accuracy_score 0.325
+confusion_matrix [[3 0 0 0 0 0 0 0 0 0]
+ [0 2 0 1 0 0 0 0 0 0]
+ [1 1 1 0 2 1 0 0 0 0]
+ [1 0 0 0 0 0 2 0 0 0]
+ [1 0 0 0 3 0 0 0 0 0]
+ [1 2 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 4 0 0 0]
+ [1 0 1 0 0 0 0 0 0 0]
+ [1 2 0 0 0 0 2 0 0 0]
+ [1 0 0 0 0 0 5 0 1 0]]
+Confusion matrix, without normalization
+[[3 0 0 0 0 0 0 0 0 0]
+ [0 2 0 1 0 0 0 0 0 0]
+ [1 1 1 0 2 1 0 0 0 0]
+ [1 0 0 0 0 0 2 0 0 0]
+ [1 0 0 0 3 0 0 0 0 0]
+ [1 2 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 4 0 0 0]
+ [1 0 1 0 0 0 0 0 0 0]
+ [1 2 0 0 0 0 2 0 0 0]
+ [1 0 0 0 0 0 5 0 1 0]]
+
+Process finished with exit code 0
