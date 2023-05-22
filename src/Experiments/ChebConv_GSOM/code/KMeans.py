@@ -34,7 +34,6 @@ def kmeans_features():
     df['label'] = kmeans.labels_
     df.to_csv(kmeans_labels)
 
-
 def kmeans_gsom_coordinates():
     df = pd.read_csv(gsom_coordinates_file)
     print(df.shape)
@@ -52,14 +51,17 @@ def kmeans_gsom_coordinates():
     plt.ylabel('WCSS')
     plt.show()
 
-    kmeans = KMeans(n_clusters=4, init='k-means++', max_iter=300, n_init=10, random_state=0)
+    kmeans = KMeans(n_clusters=8, init='k-means++', max_iter=300, n_init=10, random_state=0)
     kmeans.fit(data_training)
 
     color_map=['r','g','b','y']
 
-    for i in range(4):
-        plt.scatter(data_training[kmeans.labels_==i,3],data_training[kmeans.labels_==i,4],c=color_map[i])
+    for i in range(8):
+        plt.scatter(data_training.values[kmeans.labels_==i,0],data_training.values[kmeans.labels_==i,1],cmap='coolwarm')
         plt.scatter(kmeans.cluster_centers_[i,0],kmeans.cluster_centers_[i,1],marker='*',s=200,c='k')
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.title('K-Means on GSOM map coordinates')
 
     plt.show()
 
