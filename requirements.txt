@@ -1,8 +1,11 @@
-numpy
-matplotlib
-opencv-python
+numpy~=1.23.3
+matplotlib~=3.5.2
+opencv-python~=4.5.5.64
 scipy
 scikit-image
-tqdm
-mediapipe
-pandas
+tqdm~=4.64.0
+mediapipe~=0.8.10
+pandas~=1.4.2
+torch~=1.13.1
+scikit-learn~=1.2.1
+seaborn~=0.12.2

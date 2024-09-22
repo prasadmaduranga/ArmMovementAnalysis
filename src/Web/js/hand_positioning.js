@@ -59,7 +59,7 @@ function onResults(results) {
     // x=100; y=100;
     // width=80; height=40;
     // clockwiseRotation=20 degrees // rotation according to point (x, y)
-    drawCircle(500, 150, 200, 100, rad);
+    // drawCircle(500, 150, 200, 100, rad);
 
 
 }
